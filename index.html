@@ -2,9 +2,9 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>نظام AI رادار الذهب - XAU/USD</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
@@ -18,75 +18,81 @@
             --border: #30363d;
         }
 
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
         body {
             font-family: 'Cairo', sans-serif;
             background-color: var(--bg-dark);
             color: var(--text-main);
             margin: 0;
-            padding: 20px;
-            box-sizing: border-box;
+            padding: 10px;
+            padding-bottom: 75px; /* مساحة لشريط التنقل السفلي في الجوال */
         }
 
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 20px;
+            padding: 10px 15px;
             background: var(--panel-bg);
             border-bottom: 2px solid var(--gold);
-            border-radius: 10px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.1);
+            border-radius: 8px;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.08);
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 15px;
-            font-size: 24px;
+            gap: 10px;
+            font-size: 16px;
             font-weight: 900;
             color: var(--gold);
         }
 
         .logo img {
-            width: 50px;
-            height: 50px;
+            width: 35px;
+            height: 35px;
             border-radius: 50%;
-            border: 2px solid var(--gold);
+            border: 1.5px solid var(--gold);
         }
 
         .live-ticker {
-            font-size: 20px;
+            font-size: 14px;
             font-weight: bold;
             display: flex;
-            gap: 20px;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 2px;
         }
 
         .price-up { color: var(--green); }
         .price-down { color: var(--red); }
 
+        /* حاوية الأقسام */
         .dashboard-grid {
             display: grid;
             grid-template-columns: 1fr 2fr 1fr;
-            gap: 20px;
-            height: 80vh;
+            gap: 15px;
         }
 
         .panel {
             background: var(--panel-bg);
             border: 1px solid var(--border);
             border-radius: 10px;
-            padding: 20px;
-            overflow-y: auto;
+            padding: 15px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.3);
         }
 
         .panel-title {
             color: var(--gold);
-            font-size: 18px;
+            font-size: 15px;
             border-bottom: 1px solid var(--border);
-            padding-bottom: 10px;
-            margin-bottom: 15px;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -95,58 +101,62 @@
         /* News Section */
         .news-item {
             background: #1c2128;
-            padding: 15px;
+            padding: 12px;
             border-radius: 8px;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             border-right: 4px solid var(--red);
         }
         
         .news-item img {
             width: 100%;
-            height: 120px;
+            height: 110px;
             object-fit: cover;
-            border-radius: 5px;
-            margin-top: 10px;
-            opacity: 0.8;
+            border-radius: 6px;
+            margin-top: 8px;
+            opacity: 0.85;
         }
 
         .news-time {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-muted);
-            margin-bottom: 5px;
+            margin-bottom: 4px;
+        }
+
+        .news-text {
+            font-size: 13px;
+            line-height: 1.4;
         }
 
         /* Signal Section */
         .signal-box {
             background: rgba(46, 160, 67, 0.1);
             border: 1px solid var(--green);
-            padding: 15px;
+            padding: 12px;
             border-radius: 8px;
             text-align: center;
-            margin-bottom: 20px;
-            transition: all 0.3s ease;
+            margin-bottom: 15px;
         }
 
         .signal-type {
-            font-size: 32px;
+            font-size: 26px;
             font-weight: 900;
-            margin: 10px 0;
+            margin: 6px 0;
             color: var(--green);
         }
 
         .signal-data {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            gap: 8px;
             text-align: right;
-            margin-top: 15px;
+            margin-top: 10px;
         }
 
         .signal-data div {
             background: var(--bg-dark);
-            padding: 8px;
+            padding: 6px 8px;
             border-radius: 5px;
-            font-size: 14px;
+            font-size: 12px;
         }
 
         .signal-data span {
@@ -158,10 +168,11 @@
         .indicator-row {
             display: flex;
             justify-content: space-between;
-            padding: 10px;
+            padding: 8px 10px;
             background: var(--bg-dark);
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             border-radius: 5px;
+            font-size: 13px;
         }
 
         .btn {
@@ -170,36 +181,108 @@
             border: none;
             padding: 12px;
             width: 100%;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: bold;
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
             transition: 0.2s;
             font-family: inherit;
         }
 
-        .btn:hover {
-            opacity: 0.8;
+        .btn:active {
+            transform: scale(0.98);
         }
 
         .btn-simulate {
-            background: transparent;
+            background: #21262d;
             color: var(--text-main);
             border: 1px solid var(--border);
-            margin-top: 15px;
+            margin-top: 10px;
         }
 
         /* Risk Manager */
         .risk-manager input {
-            width: calc(100% - 20px);
-            padding: 10px;
-            margin-bottom: 10px;
+            width: 100%;
+            padding: 8px 10px;
+            margin-bottom: 8px;
             background: var(--bg-dark);
             border: 1px solid var(--border);
             color: var(--text-main);
             border-radius: 5px;
+            font-family: inherit;
         }
 
+        /* Chart container */
+        .chart-container {
+            height: 480px;
+            min-height: 380px;
+        }
+
+        /* شريط التنقل السفلي المخصص للجوال */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #161b22;
+            border-top: 1px solid var(--border);
+            z-index: 1000;
+            justify-content: space-around;
+            padding: 8px 0 6px 0;
+        }
+
+        .nav-tab {
+            color: var(--text-muted);
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 11px;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .nav-tab i {
+            font-size: 18px;
+            margin-bottom: 3px;
+        }
+
+        .nav-tab.active {
+            color: var(--gold);
+        }
+
+        /* تنسيقات شاشات الجوال والشاشات الصغيرة */
+        @media (max-width: 900px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .mobile-nav {
+                display: flex;
+            }
+
+            /* إخفاء الأقسام غير النشطة على الجوال لإعطاء مساحة مريحة */
+            .panel {
+                display: none;
+            }
+
+            .panel.active-panel {
+                display: block;
+            }
+
+            .chart-container {
+                height: 65vh;
+            }
+
+            header {
+                padding: 10px;
+            }
+
+            .logo {
+                font-size: 14px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -207,26 +290,26 @@
     <header>
         <div class="logo">
             <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Gold Logo">
-            رادار الذهب الذكي | Trump Tracker AI
+            رادار الذهب AI
         </div>
         <div class="live-ticker">
             <span>XAU/USD: <span class="price-up" id="live-price">2654.30 <i class="fas fa-arrow-up"></i></span></span>
-            <span>السبريد: <span style="color: var(--gold)">12 نقطة</span></span>
+            <span style="font-size: 11px; color: var(--text-muted);">السبريد: <span style="color: var(--gold)">12 نقطة</span></span>
         </div>
     </header>
 
     <div class="dashboard-grid">
-        <!-- العمود الأول: الأخبار -->
-        <div class="panel">
+        <!-- القسم الأول: الأخبار -->
+        <div class="panel active-panel" id="panel-news">
             <div class="panel-title">
                 <span><i class="fas fa-satellite-dish"></i> رادار التصريحات (Live)</span>
-                <span class="badge" style="background: var(--red); padding: 2px 8px; border-radius: 12px; font-size: 12px;">مباشر</span>
+                <span style="background: var(--red); color:#fff; padding: 2px 6px; border-radius: 10px; font-size: 10px;">مباشر</span>
             </div>
             
             <div id="news-feed">
                 <div class="news-item">
-                    <div class="news-time">منذ 2 دقيقة - X (تويتر سابقاً)</div>
-                    <div class="news-text">"الاقتصاد الأمريكي أقوى من أي وقت مضى، يجب علينا دعم الدولار وتقليل الاعتماد على المعادن الأجنبية."</div>
+                    <div class="news-time">منذ 2 دقيقة - رصد آلي</div>
+                    <div class="news-text">"الاقتصاد الأمريكي أقوى من أي وقت مضى، ويجب علينا دعم الدولار وتقليل الاعتماد على المعادن الأجنبية."</div>
                     <img src="https://images.unsplash.com/photo-1580130601254-05fa23cebee5?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="News Image">
                 </div>
             </div>
@@ -234,9 +317,8 @@
             <button class="btn btn-simulate" onclick="simulateNews()"><i class="fas fa-sync-alt"></i> محاكاة تصريح جديد</button>
         </div>
 
-        <!-- العمود الثاني: الشارت الفني (TradingView) -->
-        <div class="panel" style="padding: 0; overflow: hidden;">
-            <!-- استخدام ويدجت TradingView الحقيقي -->
+        <!-- القسم الثاني: الشارت الفني المباشر -->
+        <div class="panel chart-container" id="panel-chart" style="padding: 0; overflow: hidden;">
             <div class="tradingview-widget-container" style="height: 100%; width: 100%;">
                 <div id="tradingview_xauusd" style="height: 100%; width: 100%;"></div>
                 <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
@@ -265,14 +347,14 @@
             </div>
         </div>
 
-        <!-- العمود الثالث: التحليل وإدارة المخاطر -->
-        <div class="panel">
-            <div class="panel-title"><i class="fas fa-robot"></i> قرار الذكاء الاصطناعي</div>
+        <!-- القسم الثالث: قرار AI وإدارة المخاطر -->
+        <div class="panel" id="panel-signal">
+            <div class="panel-title"><i class="fas fa-robot"></i> قرار الصفقة</div>
             
             <div class="signal-box" id="ai-signal">
-                <div>القرار الحالي بناءً على التصريح</div>
+                <div style="font-size: 12px;">الإشارة الحالية</div>
                 <div class="signal-type" id="sig-type">SELL <i class="fas fa-arrow-down"></i></div>
-                <div style="font-size: 12px; color: var(--text-muted);" id="sig-reason">التصريح يدعم قوة الدولار، مما يشكل ضغطاً سلبياً على الذهب.</div>
+                <div style="font-size: 11px; color: var(--text-muted);" id="sig-reason">التصريح يدعم قوة الدولار، مما يشكل ضغطاً سلبياً على الذهب.</div>
                 
                 <div class="signal-data">
                     <div>الدخول: <span id="sig-entry">2654.00</span></div>
@@ -285,37 +367,63 @@
             <div class="panel-title"><i class="fas fa-chart-line"></i> تقاطع المؤشرات (Confluence)</div>
             <div class="indicator-row">
                 <span>RSI (14)</span>
-                <span style="color: var(--red)">68.5 (تشبع شرائي)</span>
+                <span style="color: var(--red)">68.5 (تشبع)</span>
             </div>
             <div class="indicator-row">
                 <span>MACD</span>
-                <span style="color: var(--red)">تقاطع سلبي</span>
+                <span style="color: var(--red)">سلبي</span>
             </div>
             <div class="indicator-row">
-                <span>ATR (التقلب)</span>
-                <span style="color: var(--gold)">6.2 دولار</span>
+                <span>ATR (المدى)</span>
+                <span style="color: var(--gold)">6.2$</span>
             </div>
 
-            <div class="panel-title" style="margin-top: 20px;"><i class="fas fa-shield-alt"></i> إدارة المخاطر (لحسابات التمويل)</div>
+            <div class="panel-title" style="margin-top: 15px;"><i class="fas fa-shield-alt"></i> حاسبة اللوت</div>
             <div class="risk-manager">
-                <label style="font-size: 12px; color: var(--text-muted);">رصيد الحساب ($)</label>
+                <label style="font-size: 11px; color: var(--text-muted);">رصيد الحساب ($)</label>
                 <input type="number" id="account-balance" value="100000">
                 
-                <label style="font-size: 12px; color: var(--text-muted);">المخاطرة المسموحة (%)</label>
+                <label style="font-size: 11px; color: var(--text-muted);">المخاطرة المسموحة (%)</label>
                 <input type="number" id="risk-percent" value="1">
                 
-                <div class="indicator-row" style="background: rgba(255,215,0,0.1); border: 1px solid var(--gold);">
+                <div class="indicator-row" style="background: rgba(255,215,0,0.1); border: 1px solid var(--gold); margin-top: 8px;">
                     <span>اللوت المقترح:</span>
                     <span id="suggested-lot" style="font-weight: bold; color: var(--gold);">1.25 Lot</span>
                 </div>
             </div>
 
-            <button class="btn" style="margin-top: 15px;" onclick="executeTrade()"><i class="fas fa-bolt"></i> إرسال الصفقة (MT5 API)</button>
+            <button class="btn" style="margin-top: 12px;" onclick="executeTrade()"><i class="fas fa-bolt"></i> إرسال الصفقة (MT5)</button>
+        </div>
+    </div>
+
+    <!-- شريط التنقل السفلي للجوال -->
+    <div class="mobile-nav">
+        <div class="nav-tab active" onclick="switchTab('news', this)">
+            <i class="fas fa-satellite-dish"></i>
+            <span>الرادار</span>
+        </div>
+        <div class="nav-tab" onclick="switchTab('chart', this)">
+            <i class="fas fa-chart-candlestick"></i>
+            <span>الشارت</span>
+        </div>
+        <div class="nav-tab" onclick="switchTab('signal', this)">
+            <i class="fas fa-robot"></i>
+            <span>الصفقة & اللوت</span>
         </div>
     </div>
 
     <script>
-        // دوال جافاسكريبت لمحاكاة ديناميكية النظام
+        // التبديل بين التبويبات في الجوال
+        function switchTab(tabId, element) {
+            if (window.innerWidth <= 900) {
+                document.querySelectorAll('.panel').forEach(p => p.classList.remove('active-panel'));
+                document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                
+                document.getElementById('panel-' + tabId).classList.add('active-panel');
+                element.classList.add('active');
+            }
+        }
+
         const trumpNews = [
             {
                 text: "سوف نفرض رسوماً جمركية بنسبة 100% على أي دولة تتخلى عن التعامل بالدولار الأمريكي.",
@@ -335,8 +443,6 @@
 
         function simulateNews() {
             const news = trumpNews[Math.floor(Math.random() * trumpNews.length)];
-            
-            // تحديث الأخبار
             const newsFeed = document.getElementById('news-feed');
             newsFeed.innerHTML = `
                 <div class="news-item" style="border-right-color: ${news.type === 'BUY' ? 'var(--green)' : 'var(--red)'}">
@@ -346,7 +452,6 @@
                 </div>
                 ` + newsFeed.innerHTML;
 
-            // تحديث الإشارة
             updateSignal(news);
         }
 
@@ -381,18 +486,17 @@
         }
 
         function calculateLot() {
-            const balance = document.getElementById('account-balance').value;
-            const riskPercent = document.getElementById('risk-percent').value;
-            const slPips = 80; // افتراض 80 نقطة (8 دولار في الذهب)
+            const balance = parseFloat(document.getElementById('account-balance').value) || 0;
+            const riskPercent = parseFloat(document.getElementById('risk-percent').value) || 0;
+            const slPips = 80; 
             
             const riskAmount = balance * (riskPercent / 100);
-            const pipValue = 10; // قيمة النقطة للوت القياسي
+            const pipValue = 10;
             
             const lotSize = (riskAmount / (slPips * pipValue)).toFixed(2);
             document.getElementById('suggested-lot').innerText = lotSize + ' Lot';
         }
 
-        // تحديث السعر الحي بشكل وهمي
         setInterval(() => {
             const change = (Math.random() - 0.5) * 1.5;
             currentPrice += change;
@@ -401,7 +505,6 @@
             priceElem.className = change > 0 ? 'price-up' : 'price-down';
         }, 3000);
 
-        // ربط حاسبة المخاطر بالمدخلات
         document.getElementById('account-balance').addEventListener('input', calculateLot);
         document.getElementById('risk-percent').addEventListener('input', calculateLot);
 
