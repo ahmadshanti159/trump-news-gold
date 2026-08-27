@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>نظام AI رادار الذهب - XAU/USD</title>
+    <title>رادار الذهب الحي | Trump Live Tracker AI</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -29,7 +29,7 @@
             color: var(--text-main);
             margin: 0;
             padding: 10px;
-            padding-bottom: 75px; /* مساحة لشريط التنقل السفلي في الجوال */
+            padding-bottom: 75px;
         }
 
         header {
@@ -48,31 +48,37 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 900;
             color: var(--gold);
         }
 
-        .logo img {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            border: 1.5px solid var(--gold);
-        }
-
-        .live-ticker {
-            font-size: 14px;
-            font-weight: bold;
+        .status-badge {
             display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 2px;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            color: var(--green);
+            background: rgba(46, 160, 67, 0.15);
+            padding: 4px 8px;
+            border-radius: 12px;
+            border: 1px solid var(--green);
         }
 
-        .price-up { color: var(--green); }
-        .price-down { color: var(--red); }
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--green);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
 
-        /* حاوية الأقسام */
+        @keyframes pulse {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(1.2); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
         .dashboard-grid {
             display: grid;
             grid-template-columns: 1fr 2fr 1fr;
@@ -98,50 +104,56 @@
             align-items: center;
         }
 
-        /* News Section */
         .news-item {
             background: #1c2128;
             padding: 12px;
             border-radius: 8px;
-            margin-bottom: 12px;
-            border-right: 4px solid var(--red);
+            margin-bottom: 10px;
+            border-right: 4px solid var(--border);
+            cursor: pointer;
+            transition: all 0.2s ease;
         }
-        
-        .news-item img {
-            width: 100%;
-            height: 110px;
-            object-fit: cover;
-            border-radius: 6px;
-            margin-top: 8px;
-            opacity: 0.85;
+
+        .news-item:hover {
+            border-color: var(--gold);
+            background: #22272e;
         }
 
         .news-time {
-            font-size: 11px;
+            font-size: 10px;
             color: var(--text-muted);
             margin-bottom: 4px;
+            display: flex;
+            justify-content: space-between;
         }
 
         .news-text {
             font-size: 13px;
             line-height: 1.4;
+            font-weight: 600;
+        }
+
+        .news-source {
+            font-size: 10px;
+            color: var(--gold);
+            margin-top: 4px;
         }
 
         /* Signal Section */
         .signal-box {
-            background: rgba(46, 160, 67, 0.1);
-            border: 1px solid var(--green);
+            background: rgba(255, 215, 0, 0.05);
+            border: 1px solid var(--border);
             padding: 12px;
             border-radius: 8px;
             text-align: center;
             margin-bottom: 15px;
+            transition: all 0.3s ease;
         }
 
         .signal-type {
             font-size: 26px;
             font-weight: 900;
             margin: 6px 0;
-            color: var(--green);
         }
 
         .signal-data {
@@ -164,7 +176,6 @@
             font-weight: bold;
         }
 
-        /* Indicators Section */
         .indicator-row {
             display: flex;
             justify-content: space-between;
@@ -193,14 +204,6 @@
             transform: scale(0.98);
         }
 
-        .btn-simulate {
-            background: #21262d;
-            color: var(--text-main);
-            border: 1px solid var(--border);
-            margin-top: 10px;
-        }
-
-        /* Risk Manager */
         .risk-manager input {
             width: 100%;
             padding: 8px 10px;
@@ -212,13 +215,12 @@
             font-family: inherit;
         }
 
-        /* Chart container */
         .chart-container {
-            height: 480px;
-            min-height: 380px;
+            height: 520px;
+            min-height: 400px;
         }
 
-        /* شريط التنقل السفلي المخصص للجوال */
+        /* Mobile Bottom Bar */
         .mobile-nav {
             display: none;
             position: fixed;
@@ -252,7 +254,6 @@
             color: var(--gold);
         }
 
-        /* تنسيقات شاشات الجوال والشاشات الصغيرة */
         @media (max-width: 900px) {
             .dashboard-grid {
                 grid-template-columns: 1fr;
@@ -262,7 +263,6 @@
                 display: flex;
             }
 
-            /* إخفاء الأقسام غير النشطة على الجوال لإعطاء مساحة مريحة */
             .panel {
                 display: none;
             }
@@ -274,14 +274,6 @@
             .chart-container {
                 height: 65vh;
             }
-
-            header {
-                padding: 10px;
-            }
-
-            .logo {
-                font-size: 14px;
-            }
         }
     </style>
 </head>
@@ -289,35 +281,31 @@
 
     <header>
         <div class="logo">
-            <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Gold Logo">
-            رادار الذهب AI
+            <i class="fas fa-brain" style="color: var(--gold); font-size: 20px;"></i>
+            رادار الذهب الحي (Live AI)
         </div>
-        <div class="live-ticker">
-            <span>XAU/USD: <span class="price-up" id="live-price">2654.30 <i class="fas fa-arrow-up"></i></span></span>
-            <span style="font-size: 11px; color: var(--text-muted);">السبريد: <span style="color: var(--gold)">12 نقطة</span></span>
+        <div class="status-badge">
+            <div class="status-dot"></div>
+            <span>اتصال مباشر بالأخبار</span>
         </div>
     </header>
 
     <div class="dashboard-grid">
-        <!-- القسم الأول: الأخبار -->
+        <!-- قسم الأخبار الحقيقية -->
         <div class="panel active-panel" id="panel-news">
             <div class="panel-title">
-                <span><i class="fas fa-satellite-dish"></i> رادار التصريحات (Live)</span>
-                <span style="background: var(--red); color:#fff; padding: 2px 6px; border-radius: 10px; font-size: 10px;">مباشر</span>
+                <span><i class="fas fa-rss"></i> تصريحات ترامب الحية</span>
+                <button onclick="fetchLiveTrumpNews()" style="background:none; border:none; color:var(--gold); cursor:pointer;"><i class="fas fa-sync"></i></button>
             </div>
             
-            <div id="news-feed">
-                <div class="news-item">
-                    <div class="news-time">منذ 2 دقيقة - رصد آلي</div>
-                    <div class="news-text">"الاقتصاد الأمريكي أقوى من أي وقت مضى، ويجب علينا دعم الدولار وتقليل الاعتماد على المعادن الأجنبية."</div>
-                    <img src="https://images.unsplash.com/photo-1580130601254-05fa23cebee5?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="News Image">
-                </div>
+            <div id="news-loading" style="text-align:center; padding: 20px; font-size: 13px; color: var(--text-muted);">
+                <i class="fas fa-spinner fa-spin"></i> جاري سحب آخر الأخبار والتصريحات...
             </div>
 
-            <button class="btn btn-simulate" onclick="simulateNews()"><i class="fas fa-sync-alt"></i> محاكاة تصريح جديد</button>
+            <div id="news-feed" style="max-height: 440px; overflow-y: auto;"></div>
         </div>
 
-        <!-- القسم الثاني: الشارت الفني المباشر -->
+        <!-- قسم الشارت الحي -->
         <div class="panel chart-container" id="panel-chart" style="padding: 0; overflow: hidden;">
             <div class="tradingview-widget-container" style="height: 100%; width: 100%;">
                 <div id="tradingview_xauusd" style="height: 100%; width: 100%;"></div>
@@ -347,73 +335,56 @@
             </div>
         </div>
 
-        <!-- القسم الثالث: قرار AI وإدارة المخاطر -->
+        <!-- قسم الإشارة وإدارة الحساب -->
         <div class="panel" id="panel-signal">
-            <div class="panel-title"><i class="fas fa-robot"></i> قرار الصفقة</div>
+            <div class="panel-title"><i class="fas fa-crosshairs"></i> تحليل الصفقة الحالية</div>
             
             <div class="signal-box" id="ai-signal">
-                <div style="font-size: 12px;">الإشارة الحالية</div>
-                <div class="signal-type" id="sig-type">SELL <i class="fas fa-arrow-down"></i></div>
-                <div style="font-size: 11px; color: var(--text-muted);" id="sig-reason">التصريح يدعم قوة الدولار، مما يشكل ضغطاً سلبياً على الذهب.</div>
+                <div style="font-size: 12px; color: var(--text-muted);" id="signal-headline">اختر خبراً أو انتظر التحديث التلقائي</div>
+                <div class="signal-type" id="sig-type" style="color: var(--gold);">WAITING...</div>
+                <div style="font-size: 12px; margin-top: 5px; line-height: 1.4;" id="sig-reason">النظام يقوم بقراءة الأخبار الحية لتوليد الصفقة.</div>
                 
                 <div class="signal-data">
-                    <div>الدخول: <span id="sig-entry">2654.00</span></div>
-                    <div>الوقف (SL): <span id="sig-sl" style="color: var(--red);">2662.00</span></div>
-                    <div>الهدف 1: <span id="sig-tp1" style="color: var(--green);">2642.00</span></div>
-                    <div>الهدف 2: <span id="sig-tp2" style="color: var(--gold);">2630.00</span></div>
+                    <div>سعر الدخول: <span id="sig-entry">--</span></div>
+                    <div>وقف الخسارة (SL): <span id="sig-sl" style="color: var(--red);">--</span></div>
+                    <div>الهدف 1 (TP1): <span id="sig-tp1" style="color: var(--green);">--</span></div>
+                    <div>الهدف 2 (TP2): <span id="sig-tp2" style="color: var(--gold);">--</span></div>
                 </div>
             </div>
 
-            <div class="panel-title"><i class="fas fa-chart-line"></i> تقاطع المؤشرات (Confluence)</div>
-            <div class="indicator-row">
-                <span>RSI (14)</span>
-                <span style="color: var(--red)">68.5 (تشبع)</span>
-            </div>
-            <div class="indicator-row">
-                <span>MACD</span>
-                <span style="color: var(--red)">سلبي</span>
-            </div>
-            <div class="indicator-row">
-                <span>ATR (المدى)</span>
-                <span style="color: var(--gold)">6.2$</span>
-            </div>
-
-            <div class="panel-title" style="margin-top: 15px;"><i class="fas fa-shield-alt"></i> حاسبة اللوت</div>
+            <div class="panel-title"><i class="fas fa-calculator"></i> حاسبة إدارة رأس المال</div>
             <div class="risk-manager">
                 <label style="font-size: 11px; color: var(--text-muted);">رصيد الحساب ($)</label>
-                <input type="number" id="account-balance" value="100000">
+                <input type="number" id="account-balance" value="50000">
                 
-                <label style="font-size: 11px; color: var(--text-muted);">المخاطرة المسموحة (%)</label>
-                <input type="number" id="risk-percent" value="1">
+                <label style="font-size: 11px; color: var(--text-muted);">نسبة المخاطرة لكل صفقة (%)</label>
+                <input type="number" id="risk-percent" value="1" step="0.5">
                 
-                <div class="indicator-row" style="background: rgba(255,215,0,0.1); border: 1px solid var(--gold); margin-top: 8px;">
-                    <span>اللوت المقترح:</span>
-                    <span id="suggested-lot" style="font-weight: bold; color: var(--gold);">1.25 Lot</span>
+                <div class="indicator-row" style="background: rgba(255,215,0,0.1); border: 1px solid var(--gold); margin-top: 6px;">
+                    <span>حجم العقد المقترح:</span>
+                    <span id="suggested-lot" style="font-weight: bold; color: var(--gold);">0.62 Lot</span>
                 </div>
             </div>
-
-            <button class="btn" style="margin-top: 12px;" onclick="executeTrade()"><i class="fas fa-bolt"></i> إرسال الصفقة (MT5)</button>
         </div>
     </div>
 
-    <!-- شريط التنقل السفلي للجوال -->
+    <!-- شريط الجوال السفلي -->
     <div class="mobile-nav">
         <div class="nav-tab active" onclick="switchTab('news', this)">
-            <i class="fas fa-satellite-dish"></i>
-            <span>الرادار</span>
+            <i class="fas fa-rss"></i>
+            <span>الأخبار الحية</span>
         </div>
         <div class="nav-tab" onclick="switchTab('chart', this)">
             <i class="fas fa-chart-candlestick"></i>
             <span>الشارت</span>
         </div>
         <div class="nav-tab" onclick="switchTab('signal', this)">
-            <i class="fas fa-robot"></i>
-            <span>الصفقة & اللوت</span>
+            <i class="fas fa-crosshairs"></i>
+            <span>الصفقة والحساب</span>
         </div>
     </div>
 
     <script>
-        // التبديل بين التبويبات في الجوال
         function switchTab(tabId, element) {
             if (window.innerWidth <= 900) {
                 document.querySelectorAll('.panel').forEach(p => p.classList.remove('active-panel'));
@@ -424,93 +395,151 @@
             }
         }
 
-        const trumpNews = [
-            {
-                text: "سوف نفرض رسوماً جمركية بنسبة 100% على أي دولة تتخلى عن التعامل بالدولار الأمريكي.",
-                type: "BUY",
-                reason: "التلويح بالرسوم الجمركية يزيد المخاوف ويدفع المستثمرين للذهب كملاذ آمن.",
-                img: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
-            },
-            {
-                text: "أرقام التضخم ممتازة، وسنعمل مع الفيدرالي على إبقاء الفائدة مرتفعة لدعم الاقتصاد.",
-                type: "SELL",
-                reason: "رفع الفائدة أو إبقاؤها مرتفعة يزيد من عوائد السندات ويضغط على الذهب هبوطاً.",
-                img: "https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+        // جلب الأخبار الحقيقية عبر Google News RSS API
+        async function fetchLiveTrumpNews() {
+            const loadingElem = document.getElementById('news-loading');
+            const feedElem = document.getElementById('news-feed');
+            loadingElem.style.display = 'block';
+
+            const searchQuery = encodeURIComponent('Donald Trump tariffs OR dollar OR economy OR gold');
+            const rssUrl = `https://news.google.com/rss/search?q=${searchQuery}&hl=en-US&gl=US&ceid=US:en`;
+            const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
+
+            try {
+                const res = await fetch(apiUrl);
+                const data = await res.json();
+
+                loadingElem.style.display = 'none';
+                feedElem.innerHTML = '';
+
+                if (data.status === 'ok' && data.items.length > 0) {
+                    data.items.slice(0, 10).forEach((item, index) => {
+                        const newsCard = document.createElement('div');
+                        newsCard.className = 'news-item';
+                        
+                        // تحليل محتوى الخبر الحقيقي
+                        const analysis = analyzeRealNews(item.title);
+                        newsCard.style.borderRightColor = analysis.type === 'BUY' ? 'var(--green)' : (analysis.type === 'SELL' ? 'var(--red)' : 'var(--border)');
+
+                        newsCard.innerHTML = `
+                            <div class="news-time">
+                                <span>${new Date(item.pubDate).toLocaleTimeString('ar-EG', {hour: '2-digit', minute:'2-digit'})}</span>
+                                <span style="color: ${analysis.type === 'BUY' ? 'var(--green)' : (analysis.type === 'SELL' ? 'var(--red)' : 'var(--text-muted)')}; font-weight: bold;">${analysis.type}</span>
+                            </div>
+                            <div class="news-text">${item.title}</div>
+                            <div class="news-source"><i class="fas fa-external-link-alt"></i> ${item.author || 'وكالات أنباء عالمية'}</div>
+                        `;
+
+                        newsCard.onclick = () => applySignal(item.title, analysis);
+                        feedElem.appendChild(newsCard);
+
+                        // تطبيق أول خبر كإشارة تلقائية رئيسية
+                        if (index === 0) {
+                            applySignal(item.title, analysis);
+                        }
+                    });
+                } else {
+                    feedElem.innerHTML = '<div style="text-align:center; padding:15px; color:var(--text-muted);">لا توجد أخبار جديدة في هذه اللحظة.</div>';
+                }
+            } catch (err) {
+                loadingElem.style.display = 'none';
+                feedElem.innerHTML = '<div style="text-align:center; padding:15px; color:var(--red);">تعذر الاتصال بمزود الأخبار. تحقق من اتصال الإنترنت.</div>';
             }
-        ];
-
-        let currentPrice = 2654.30;
-
-        function simulateNews() {
-            const news = trumpNews[Math.floor(Math.random() * trumpNews.length)];
-            const newsFeed = document.getElementById('news-feed');
-            newsFeed.innerHTML = `
-                <div class="news-item" style="border-right-color: ${news.type === 'BUY' ? 'var(--green)' : 'var(--red)'}">
-                    <div class="news-time">الآن - تم الرصد بواسطة AI</div>
-                    <div class="news-text">"${news.text}"</div>
-                    <img src="${news.img}" alt="News Context">
-                </div>
-                ` + newsFeed.innerHTML;
-
-            updateSignal(news);
         }
 
-        function updateSignal(news) {
+        // محرك تحليل التأثير الاقتصادي للأخبار الحقيقية
+        function analyzeRealNews(headline) {
+            const text = headline.toLowerCase();
+            
+            // مؤشرات الشراء للذهب: توتر تجاري، رسوم، ضعف دولار، تضخم، صراعات
+            const buyKeywords = ['tariff', 'trade war', 'tax', 'sanction', 'threat', 'inflation', 'debt', 'weak dollar', 'fed cut', 'crisis'];
+            // مؤشرات البيع للذهب: قوة دولار، رفع فائدة، استقرار، اتفاقيات تجارية
+            const sellKeywords = ['strong dollar', 'rate hike', 'fed hike', 'trade deal', 'truce', 'peace', 'growth', 'stocks rally'];
+
+            let buyScore = 0;
+            let sellScore = 0;
+
+            buyKeywords.forEach(word => { if(text.includes(word)) buyScore++; });
+            sellKeywords.forEach(word => { if(text.includes(word)) sellScore++; });
+
+            if (buyScore > sellScore) {
+                return {
+                    type: 'BUY',
+                    reason: 'الخبر يتضمن مؤشرات على رسوم جمركية أو توترات اقتصادية، مما يدعم الذهب كملاذ آمن ضد التضخم.'
+                };
+            } else if (sellScore > buyScore) {
+                return {
+                    type: 'SELL',
+                    reason: 'الخبر يدعم قوة الدولار الأمريكي أو تهدئة الأسواق، مما يضغط سلباً على أسعار المعادن والذهب.'
+                };
+            } else {
+                return {
+                    type: 'NEUTRAL',
+                    reason: 'التصريح لا يحمل تأثيراً مباشراً وحاسماً على الذهب، يفضل انتظار تأكيد حركة السعر (Price Action).'
+                };
+            }
+        }
+
+        // تطبيق الإشارة في لوحة التحكم وحساب الأهداف
+        function applySignal(title, analysis) {
             const sigBox = document.getElementById('ai-signal');
             const typeElem = document.getElementById('sig-type');
             
-            if(news.type === 'BUY') {
-                sigBox.style.backgroundColor = 'rgba(46, 160, 67, 0.1)';
+            document.getElementById('signal-headline').innerText = title.substring(0, 75) + '...';
+            document.getElementById('sig-reason').innerText = analysis.reason;
+            typeElem.innerText = analysis.type;
+
+            if (analysis.type === 'BUY') {
                 sigBox.style.borderColor = 'var(--green)';
-                typeElem.innerHTML = 'BUY <i class="fas fa-arrow-up"></i>';
+                sigBox.style.background = 'rgba(46, 160, 67, 0.08)';
                 typeElem.style.color = 'var(--green)';
                 
-                document.getElementById('sig-entry').innerText = currentPrice.toFixed(2);
-                document.getElementById('sig-sl').innerText = (currentPrice - 8).toFixed(2);
-                document.getElementById('sig-tp1').innerText = (currentPrice + 12).toFixed(2);
-                document.getElementById('sig-tp2').innerText = (currentPrice + 24).toFixed(2);
-            } else {
-                sigBox.style.backgroundColor = 'rgba(248, 81, 73, 0.1)';
+                document.getElementById('sig-entry').innerText = 'سعر السوق الحالي';
+                document.getElementById('sig-sl').innerText = '-8.00 $';
+                document.getElementById('sig-tp1').innerText = '+12.00 $ (1:1.5)';
+                document.getElementById('sig-tp2').innerText = '+24.00 $ (1:3)';
+            } else if (analysis.type === 'SELL') {
                 sigBox.style.borderColor = 'var(--red)';
-                typeElem.innerHTML = 'SELL <i class="fas fa-arrow-down"></i>';
+                sigBox.style.background = 'rgba(248, 81, 73, 0.08)';
                 typeElem.style.color = 'var(--red)';
                 
-                document.getElementById('sig-entry').innerText = currentPrice.toFixed(2);
-                document.getElementById('sig-sl').innerText = (currentPrice + 8).toFixed(2);
-                document.getElementById('sig-tp1').innerText = (currentPrice - 12).toFixed(2);
-                document.getElementById('sig-tp2').innerText = (currentPrice - 24).toFixed(2);
+                document.getElementById('sig-entry').innerText = 'سعر السوق الحالي';
+                document.getElementById('sig-sl').innerText = '+8.00 $';
+                document.getElementById('sig-tp1').innerText = '-12.00 $ (1:1.5)';
+                document.getElementById('sig-tp2').innerText = '-24.00 $ (1:3)';
+            } else {
+                sigBox.style.borderColor = 'var(--border)';
+                sigBox.style.background = 'rgba(255, 215, 0, 0.05)';
+                typeElem.style.color = 'var(--gold)';
+                
+                document.getElementById('sig-entry').innerText = '--';
+                document.getElementById('sig-sl').innerText = '--';
+                document.getElementById('sig-tp1').innerText = '--';
+                document.getElementById('sig-tp2').innerText = '--';
             }
-            
-            document.getElementById('sig-reason').innerText = news.reason;
+
             calculateLot();
         }
 
+        // حاسبة إدارة رأس المال
         function calculateLot() {
             const balance = parseFloat(document.getElementById('account-balance').value) || 0;
             const riskPercent = parseFloat(document.getElementById('risk-percent').value) || 0;
-            const slPips = 80; 
+            const slPips = 80; // 80 نقطة (8 دولار في الذهب)
             
             const riskAmount = balance * (riskPercent / 100);
             const pipValue = 10;
             
             const lotSize = (riskAmount / (slPips * pipValue)).toFixed(2);
-            document.getElementById('suggested-lot').innerText = lotSize + ' Lot';
+            document.getElementById('suggested-lot').innerText = (lotSize > 0 ? lotSize : 0.01) + ' Lot';
         }
-
-        setInterval(() => {
-            const change = (Math.random() - 0.5) * 1.5;
-            currentPrice += change;
-            const priceElem = document.getElementById('live-price');
-            priceElem.innerHTML = `${currentPrice.toFixed(2)} ${change > 0 ? '<i class="fas fa-arrow-up"></i>' : '<i class="fas fa-arrow-down"></i>'}`;
-            priceElem.className = change > 0 ? 'price-up' : 'price-down';
-        }, 3000);
 
         document.getElementById('account-balance').addEventListener('input', calculateLot);
         document.getElementById('risk-percent').addEventListener('input', calculateLot);
 
-        function executeTrade() {
-            alert("تم إرسال أمر التداول بنجاح إلى منصة MetaTrader عبر الـ API!");
-        }
+        // جلب الأخبار تلقائياً عند فتح الصفحة وتحديثها كل دقيقة
+        fetchLiveTrumpNews();
+        setInterval(fetchLiveTrumpNews, 60000);
     </script>
 </body>
 </html>
